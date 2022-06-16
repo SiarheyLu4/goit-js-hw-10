@@ -1,23 +1,34 @@
 import './css/styles.css';
+import { fetchCountries } from './js/fetchCountries';
+import debounce from 'lodash.debounce';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const DEBOUNCE_DELAY = 300;
 
+const inputEl = document.querySelector('#search-box');
+const listEl = document.querySelector('.country-list');
+const infoEl = document.querySelector('.country-info');
+
+inputEl.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
+
+function onInput() {
+
+fetchCountries(ukraine)
+    .then(renderCountry)
+    .catch(onFetchError);
+}
+
+function renderCountry() {
+    countries => {
+    console.log(countries);
+    }
+}
+
+function onFetchError(error) {
+    Notify.failure('Oops, there is no country with that name');
+}
 
 
-function fetchCountries(name) {
-    return fetch(`https://restcountries.com/v3.1/name/ukraine?fields=name,capital,population,flags,languages`)
-        .then(response => {
-            // console.log(response.json());
-            return response.json();
-        });
-};
 
-
-    // .then(countries => {
-    // console.log(countries);
-    // })
-    // .catch(error => {
-    //     console.log(error);
-    // });
 
 
